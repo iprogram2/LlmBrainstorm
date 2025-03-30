@@ -5,95 +5,53 @@
 <div class="container">
     <h1 class="mt-4 mb-4">LLM Brainstorming Platform</h1>
 
-    <!-- Gamification Header -->
-    <div class="card mb-4 gamification-header">
-        <div class="card-body d-flex justify-content-between align-items-center">
-            <div class="points-container">
-                <div class="points-display">
-                    <i class="fas fa-star text-warning me-2"></i> Points: <span class="points-value">0</span>
-                </div>
-                <div class="d-flex justify-content-between small text-muted">
-                    <span>Brainstorm Energy</span>
-                    <span>0%</span>
-                </div>
-                <div class="energy-meter">
-                    <div class="energy-fill" style="width: 0%;"></div>
-                </div>
-            </div>
-            <div class="badge-container">
-                <!-- Badges will appear here as they are earned -->
-            </div>
-        </div>
-    </div>
-
-    <!-- Prompt Section (Moved to top) -->
-
-
     <div class="row mb-4">
         <!-- Left panel: LLM selection -->
         <div class="col-md-4">
             <div class="card">
-                <div class="card-header collapsible-header">
+                <div class="card-header">
                     <h5 class="mb-0">Active LLMs</h5>
                 </div>
-                <div class="card-body collapsible-content">
-                    <div class="llm-toggle-container">
-                        <div class="llm-toggle">
-                            <label class="toggle-switch">
-                                <input type="checkbox" class="llm-checkbox" data-llm="ChatGPT" id="checkbox-chatgpt">
-                                <span class="toggle-slider"></span>
-                            </label>
-                            <label for="checkbox-chatgpt">ChatGPT</label>
+                <div class="card-body">
+                    <div class="llm-selection">
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input llm-checkbox" type="checkbox" data-llm="ChatGPT" id="checkbox-chatgpt">
+                            <label class="form-check-label" for="checkbox-chatgpt">ChatGPT</label>
                         </div>
-                        <div class="llm-toggle">
-                            <label class="toggle-switch">
-                                <input type="checkbox" class="llm-checkbox" data-llm="Gemini" id="checkbox-gemini">
-                                <span class="toggle-slider"></span>
-                            </label>
-                            <label for="checkbox-gemini">Gemini</label>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input llm-checkbox" type="checkbox" data-llm="Gemini" id="checkbox-gemini">
+                            <label class="form-check-label" for="checkbox-gemini">Gemini</label>
                         </div>
-                        <div class="llm-toggle">
-                            <label class="toggle-switch">
-                                <input type="checkbox" class="llm-checkbox" data-llm="Grok" id="checkbox-grok">
-                                <span class="toggle-slider"></span>
-                            </label>
-                            <label for="checkbox-grok">Grok</label>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input llm-checkbox" type="checkbox" data-llm="Grok" id="checkbox-grok">
+                            <label class="form-check-label" for="checkbox-grok">Grok</label>
                         </div>
-                        <div class="llm-toggle">
-                            <label class="toggle-switch">
-                                <input type="checkbox" class="llm-checkbox" data-llm="Llama" id="checkbox-llama">
-                                <span class="toggle-slider"></span>
-                            </label>
-                            <label for="checkbox-llama">Llama</label>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input llm-checkbox" type="checkbox" data-llm="Llama" id="checkbox-llama">
+                            <label class="form-check-label" for="checkbox-llama">Llama</label>
                         </div>
-                        <div class="llm-toggle">
-                            <label class="toggle-switch">
-                                <input type="checkbox" class="llm-checkbox" data-llm="DeepSeek" id="checkbox-deepseek">
-                                <span class="toggle-slider"></span>
-                            </label>
-                            <label for="checkbox-deepseek">DeepSeek</label>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input llm-checkbox" type="checkbox" data-llm="DeepSeek" id="checkbox-deepseek">
+                            <label class="form-check-label" for="checkbox-deepseek">DeepSeek</label>
                         </div>
-                        <div class="llm-toggle">
-                            <label class="toggle-switch">
-                                <input type="checkbox" class="llm-checkbox" data-llm="Claude" id="checkbox-claude">
-                                <span class="toggle-slider"></span>
-                            </label>
-                            <label for="checkbox-claude">Claude</label>
+                        <div class="form-check form-switch mb-2">
+                            <input class="form-check-input llm-checkbox" type="checkbox" data-llm="Claude" id="checkbox-claude">
+                            <label class="form-check-label" for="checkbox-claude">Claude</label>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Right panel: Conversation settings (collapsible) -->
+        <!-- Right panel: Conversation settings -->
         <div class="col-md-8">
-            <div class="card conversation-settings">
-                <div class="card-header collapsible-header collapsed">
+            <div class="card">
+                <div class="card-header">
                     <h5 class="mb-0">Conversation Settings</h5>
                 </div>
-                <div class="card-body collapsible-content collapsed">
+                <div class="card-body">
                     <div class="row">
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label for="rounds-select" class="form-label">Rounds:</label>
                             <select class="form-select" id="rounds-select">
                                 <option value="1">1</option>
@@ -103,14 +61,14 @@
                                 <option value="5">5</option>
                             </select>
                         </div>
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label for="auto-proceed" class="form-label">Auto-proceed:</label>
                             <div class="form-check form-switch">
                                 <input class="form-check-input" type="checkbox" id="auto-proceed" checked>
                                 <label class="form-check-label" for="auto-proceed">Enabled</label>
                             </div>
                         </div>
-                        <div class="col-md-3 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label for="response-time" class="form-label">Response time:</label>
                             <select class="form-select" id="response-time">
                                 <option value="15">15 seconds</option>
@@ -118,30 +76,6 @@
                                 <option value="60">60 seconds</option>
                             </select>
                         </div>
-                        <div class="col-md-3 mb-3">
-                            <label for="theme-toggle" class="form-label">Theme:</label>
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="theme-toggle">
-                                <label class="form-check-label" for="theme-toggle">Dark Mode</label>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Theme Selector -->
-                    <h6 class="mt-3 mb-2">Visual Theme:</h6>
-                    <div class="theme-selector">
-                        <div class="theme-option theme-innovation active" title="Innovation Lab"></div>
-                        <div class="theme-option theme-creative" title="Creative Studio"></div>
-                        <div class="theme-option theme-strategy" title="Strategy Room"></div>
-                        <div class="theme-option theme-game" title="Game Room"></div>
-                    </div>
-                    
-                    <!-- Challenge Mode Selector -->
-                    <h6 class="mt-3 mb-2">Challenge Mode:</h6>
-                    <div class="challenge-mode-selector">
-                        <span class="challenge-mode active">Standard</span>
-                        <span class="challenge-mode">Rapid Fire</span>
-                        <span class="challenge-mode">Deep Thinking</span>
                     </div>
                 </div>
             </div>
@@ -158,22 +92,6 @@
                     <input type="text" class="form-control" id="prompt-input" placeholder="What would you like to brainstorm about today?">
                     <button class="btn btn-primary" id="go-btn">Start Brainstorming</button>
                 </div>
-                
-                <!-- Human interject feature moved below prompt -->
-                <div class="human-input-section mt-3" style="display: none;">
-                    <div class="card border-primary">
-                        <div class="card-header bg-primary text-white">
-                            <h6 class="mb-0">Human Interjection</h6>
-                        </div>
-                        <div class="card-body">
-                            <p class="text-muted small">Add your thoughts to guide the conversation. Available when debate is paused.</p>
-                            <div class="input-group">
-                                <input type="text" class="form-control" id="follow-up-input" placeholder="Enter your guidance or comment" disabled>
-                                <button class="btn btn-primary" id="follow-up-btn" disabled>Inject into conversation</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -181,28 +99,20 @@
     <div id="conversation-container" class="mb-4">
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
-                <div>
-                    <h5 class="mb-0 d-inline">Conversation <span id="round-indicator" class="badge bg-primary ms-2">Round 1 of 1</span></h5>
-                    <!-- Progress Path for visual round tracking -->
-                    <div class="progress-path mt-2 mb-0" style="width: 200px;">
-                        <!-- Progress markers will be added dynamically by JavaScript -->
-                    </div>
-                </div>
-                <div>
-                    <button id="start-btn" class="btn btn-sm btn-success me-2">Start</button>
-                    <button id="pause-btn" class="btn btn-sm btn-warning me-2" style="display: none;">Pause</button>
-                    <button id="next-round-btn" class="btn btn-sm btn-outline-primary" style="display: none;">Proceed to Next Round</button>
-                </div>
+                <h5 class="mb-0">Conversation <span id="round-indicator" class="badge bg-primary ms-2">Round 1 of 1</span></h5>
+                <button id="next-round-btn" class="btn btn-sm btn-outline-primary" style="display: none;">Proceed to Next Round</button>
             </div>
             <div class="card-body">
                 <div id="response-area">
-                    <!-- Responses will appear here in reverse chronological order (newest on top) -->
+                    <!-- Responses will appear here -->
                 </div>
-                
-                <!-- Pause Overlay -->
-                <div class="pause-overlay">
-                    <div>
-                        <i class="fas fa-pause-circle"></i> Conversation Paused
+
+                <!-- Human input section -->
+                <div class="human-input-section mt-4 border-top pt-3">
+                    <h6>Add your thoughts to guide the conversation:</h6>
+                    <div class="input-group mb-3">
+                        <input type="text" class="form-control" id="follow-up-input" placeholder="Enter your follow-up question or comment">
+                        <button class="btn btn-primary" id="follow-up-btn">Inject into conversation</button>
                     </div>
                 </div>
             </div>
@@ -211,21 +121,6 @@
 
     <div class="final-section mb-4 text-center">
         <button class="btn btn-lg btn-primary" id="final-btn">Final Answer</button>
-    </div>
-    
-    <!-- Round Completion Modal -->
-    <div class="round-completion-modal" id="round-completion-modal">
-        <div class="round-completion-content">
-            <div class="ring-ropes">
-                <div class="rope rope-top"></div>
-                <div class="rope rope-middle"></div>
-                <div class="rope rope-bottom"></div>
-            </div>
-            <div class="round-completion-title">ROUND COMPLETE!</div>
-            <div class="round-number">ROUND <span id="completed-round-number">1</span></div>
-            <div class="round-completion-subtitle">Well done!</div>
-            <div class="round-completion-points">+75 points</div>
-        </div>
     </div>
 </div>
 
@@ -331,38 +226,6 @@
             let totalRounds = parseInt($('#rounds-select').val());
             let allResponses = [];
             let responseOrder = [];
-            let isDebatePaused = true;
-            let autoProceedTimer = null;
-            let isDarkMode = false;
-
-            // Check for system/browser dark mode preference
-            if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                isDarkMode = true;
-                $('#theme-toggle').prop('checked', true);
-                applyTheme(true);
-            }
-
-            // Listen for system theme changes
-            window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', event => {
-                isDarkMode = event.matches;
-                $('#theme-toggle').prop('checked', isDarkMode);
-                applyTheme(isDarkMode);
-            });
-
-            // Theme toggle handler
-            $('#theme-toggle').on('change', function() {
-                isDarkMode = $(this).prop('checked');
-                applyTheme(isDarkMode);
-            });
-
-            // Apply theme based on dark mode setting
-            function applyTheme(darkMode) {
-                if (darkMode) {
-                    $('body').addClass('dark-mode');
-                } else {
-                    $('body').removeClass('dark-mode');
-                }
-            }
 
             // Update round indicator
             function updateRoundIndicator() {
@@ -392,10 +255,11 @@
                             apiConfigs[llm].model = config.defaultModel;
                             apiConfigs[llm].apiKey = config.apiKey;
 
-                            // If has a valid key from config, don't auto-enable
+                            // If has a valid key from config, enable it
                             if (config.hasConfiguredKey) {
-                                // Don't check the checkbox by default
-                                $(`#checkbox-${llm.toLowerCase()}`).prop('checked', false);
+                                apiConfigs[llm].enabled = true;
+                                // Check the checkbox
+                                $(`#checkbox-${llm.toLowerCase()}`).prop('checked', true);
                             }
                         })
                         .catch(error => {
@@ -418,56 +282,8 @@
                 updateRoundIndicator();
             });
 
-            // Function to check if all LLMs have responded
-            function checkAllLlmsResponded() {
-                // Get the selected LLMs
-                const selectedLlms = [];
-                $('.llm-checkbox:checked').each(function() {
-                    const llmName = $(this).data('llm');
-                    if (apiConfigs[llmName].enabled) {
-                        selectedLlms.push(llmName);
-                    }
-                });
-                
-                // Count how many LLMs have responded in the current round
-                const respondedLlms = [];
-                $('.response-card').each(function() {
-                    const llmName = $(this).data('llm');
-                    if (llmName && !$(this).hasClass('loading-card')) {
-                        respondedLlms.push(llmName);
-                    }
-                });
-                
-                // Check if all selected LLMs have responded
-                return selectedLlms.length > 0 && respondedLlms.length >= selectedLlms.length;
-            }
-
-            // Function to set up auto-proceed
-            function setupAutoProceed() {
-                // Clear any existing timer
-                if (autoProceedTimer) {
-                    clearTimeout(autoProceedTimer);
-                    autoProceedTimer = null;
-                }
-                
-                // Only set up auto-proceed if it's enabled and debate is not paused
-                if ($('#auto-proceed').prop('checked') && !isDebatePaused) {
-                    const responseTime = parseInt($('#response-time').val()) * 1000;
-                    
-                    autoProceedTimer = setTimeout(function checkAndProceed() {
-                        if (checkAllLlmsResponded() && currentRound < totalRounds && !isDebatePaused) {
-                            // Proceed to next round
-                            proceedToNextRound();
-                        } else if (currentRound < totalRounds && !isDebatePaused) {
-                            // Not all LLMs have responded yet, check again after a delay
-                            autoProceedTimer = setTimeout(checkAndProceed, 2000);
-                        }
-                    }, responseTime);
-                }
-            }
-
-            // Function to proceed to next round
-            function proceedToNextRound() {
+            // Handle next round button
+            $('#next-round-btn').on('click', function() {
                 if (currentRound < totalRounds) {
                     currentRound++;
                     updateRoundIndicator();
@@ -484,59 +300,6 @@
                         // If no follow-up provided, use the original prompt
                         startBrainstorming($('#prompt-input').val(), true);
                     }
-                }
-            }
-
-            // Handle next round button
-            $('#next-round-btn').on('click', function() {
-                proceedToNextRound();
-            });
-
-            // Handle start button
-            $('#start-btn').on('click', function() {
-                isDebatePaused = false;
-                $(this).hide();
-                $('#pause-btn').show();
-                $('.human-input-section').hide();
-                $('#follow-up-input').prop('disabled', true);
-                $('#follow-up-btn').prop('disabled', true);
-                
-                // If we're in the middle of a conversation, resume it
-                if ($('.response-card').length > 0) {
-                    setupAutoProceed();
-                } else {
-                    // Otherwise start a new conversation
-                    const prompt = $('#prompt-input').val();
-                    if (prompt.trim() !== '') {
-                        // Reset for new brainstorming session
-                        currentRound = 1;
-                        updateRoundIndicator();
-                        allResponses = [];
-                        
-                        // Start the brainstorming session
-                        startBrainstorming(prompt, false);
-                    } else {
-                        alert('Please enter a prompt');
-                        isDebatePaused = true;
-                        $(this).show();
-                        $('#pause-btn').hide();
-                    }
-                }
-            });
-
-            // Handle pause button
-            $('#pause-btn').on('click', function() {
-                isDebatePaused = true;
-                $(this).hide();
-                $('#start-btn').show();
-                $('.human-input-section').show();
-                $('#follow-up-input').prop('disabled', false);
-                $('#follow-up-btn').prop('disabled', false);
-                
-                // Clear any auto-proceed timer
-                if (autoProceedTimer) {
-                    clearTimeout(autoProceedTimer);
-                    autoProceedTimer = null;
                 }
             });
 
@@ -617,12 +380,8 @@
                 updateRoundIndicator();
                 allResponses = [];
                 
-                // Show start button and hide pause button
-                $('#start-btn').show();
-                $('#pause-btn').hide();
-                
-                // Trigger the start button click
-                $('#start-btn').click();
+                // Start the brainstorming session
+                startBrainstorming(prompt, false);
             });
 
             // Handle the follow-up button
@@ -640,36 +399,11 @@
                 
                 $('#response-area').append(humanResponseElement);
                 
-                // Resume the debate
-                isDebatePaused = false;
-                $('#pause-btn').show();
-                $('#start-btn').hide();
-                $('.human-input-section').hide();
-                $('#follow-up-input').prop('disabled', true);
-                $('#follow-up-btn').prop('disabled', true);
-                
                 // Start follow-up with the selected LLMs
                 startBrainstorming(followUp, true);
                 
                 // Clear the follow-up input
                 $('#follow-up-input').val('');
-            });
-
-            // Handle auto-proceed checkbox change
-            $('#auto-proceed').on('change', function() {
-                if ($(this).prop('checked') && !isDebatePaused) {
-                    setupAutoProceed();
-                } else if (autoProceedTimer) {
-                    clearTimeout(autoProceedTimer);
-                    autoProceedTimer = null;
-                }
-            });
-
-            // Handle response-time change
-            $('#response-time').on('change', function() {
-                if ($('#auto-proceed').prop('checked') && !isDebatePaused) {
-                    setupAutoProceed();
-                }
             });
 
             // Start the brainstorming session
@@ -736,12 +470,6 @@
                             requestData.previousLlm = randomPrevLlm;
                             requestData.previousResponse = previousResponses[randomPrevLlm];
                             requestData.originalPrompt = $('#prompt-input').val();
-                            
-                            // If this is a human interjection, mark it clearly
-                            if ($('.human-response').length > 0) {
-                                requestData.humanInterjection = true;
-                                requestData.humanComment = prompt;
-                            }
                         }
                     }
                     
@@ -775,22 +503,7 @@
                             // Follow-up button
                             const followUpButton = $('<button class="btn btn-sm btn-outline-primary me-2">Follow up</button>')
                                 .on('click', function() {
-                                    // Pause the debate
-                                    isDebatePaused = true;
-                                    $('#pause-btn').hide();
-                                    $('#start-btn').show();
-                                    $('.human-input-section').show();
-                                    $('#follow-up-input').prop('disabled', false);
-                                    $('#follow-up-btn').prop('disabled', false);
-                                    
-                                    // Set up the follow-up input
                                     $('#follow-up-input').val(`Based on ${llmName}'s response, `).focus();
-                                    
-                                    // Clear any auto-proceed timer
-                                    if (autoProceedTimer) {
-                                        clearTimeout(autoProceedTimer);
-                                        autoProceedTimer = null;
-                                    }
                                 });
                             
                             // Skip button
@@ -820,25 +533,10 @@
                             responseElement.append(actionButtons);
                             
                             // Add the response to the page
-                            // Add the latest class to the new response
-                            responseElement.addClass('latest');
-                            
-                            // Remove latest class from any existing responses
-                            $('.response-card.latest').removeClass('latest');
-                            
-                            // Add typing animation to the response text
-                            responseElement.find('.card-content p').addClass('typing-animation');
-                            
-                            // Prepend to response area (newest on top)
-                            $('#response-area').prepend(responseElement);
+                            $('#response-area').append(responseElement);
                             
                             // Make the response cards draggable
                             makeResponseCardsDraggable();
-                            
-                            // Set up auto-proceed if all LLMs have responded
-                            if (checkAllLlmsResponded()) {
-                                setupAutoProceed();
-                            }
                         } else {
                             // Show error
                             const errorElement = $('<div class="alert alert-danger"></div>')
@@ -932,96 +630,14 @@
                 
                 // Hide the next round button
                 $('#next-round-btn').hide();
-                
-                // Reset debate state
-                isDebatePaused = true;
-                $('#pause-btn').hide();
-                $('#start-btn').show();
-                
-                // Clear any auto-proceed timer
-                if (autoProceedTimer) {
-                    clearTimeout(autoProceedTimer);
-                    autoProceedTimer = null;
-                }
             });
         });
     </script>
 
     <style>
-        :root {
-            --bg-color: #ffffff;
-            --text-color: #212529;
-            --card-bg: #f8f9fa;
-            --border-color: #dee2e6;
-            --primary-color: #0d6efd;
-            --secondary-color: #6c757d;
-            --success-color: #198754;
-            --warning-color: #ffc107;
-            --danger-color: #dc3545;
-            --info-color: #0dcaf0;
-            --light-color: #f8f9fa;
-            --dark-color: #212529;
-        }
-        
-        body.dark-mode {
-            --bg-color: #121212;
-            --text-color: #e0e0e0;
-            --card-bg: #1e1e1e;
-            --border-color: #444444;
-            --primary-color: #3d8bfd;
-            --secondary-color: #8c959d;
-            --success-color: #28a745;
-            --warning-color: #ffc107;
-            --danger-color: #dc3545;
-            --info-color: #17a2b8;
-            --light-color: #343a40;
-            --dark-color: #f8f9fa;
-        }
-        
-        body.dark-mode {
-            background-color: var(--bg-color);
-            color: var(--text-color);
-        }
-        
-        body.dark-mode .card {
-            background-color: var(--card-bg);
-            border-color: var(--border-color);
-        }
-        
-        body.dark-mode .card-header {
-            background-color: rgba(0, 0, 0, 0.2);
-            border-color: var(--border-color);
-        }
-        
-        body.dark-mode .form-control,
-        body.dark-mode .form-select {
-            background-color: var(--card-bg);
-            border-color: var(--border-color);
-            color: var(--text-color);
-        }
-        
-        body.dark-mode .response-card {
-            background-color: var(--card-bg);
-            border-color: var(--border-color);
-        }
-        
-        body.dark-mode .human-response {
-            background-color: rgba(13, 110, 253, 0.1) !important;
-        }
-        
-        body.dark-mode .badge {
-            color: var(--text-color);
-        }
-        
-        body.dark-mode .modal-content {
-            background-color: var(--card-bg);
-            color: var(--text-color);
-        }
-        
         .response-card {
-            background-color: var(--card-bg);
+            background-color: #f8f9fa;
             transition: all 0.3s ease;
-            border-color: var(--border-color);
         }
         
         .response-card:hover {
@@ -1034,7 +650,7 @@
         }
         
         .response-card-placeholder {
-            border: 2px dashed var(--border-color);
+            border: 2px dashed #ced4da;
             height: 100px;
             margin-bottom: 1rem;
         }

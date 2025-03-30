@@ -1,0 +1,492 @@
+﻿@{
+    ViewData["Title"] = "LLM Brainstorming Platform";
+}
+
+<div class="container">
+    <h1 class="mt-4 mb-4">LLM Brainstorming Platform</h1>
+
+    <div class="llm-selection mb-4">
+        <div class="row">
+            <div class="col-md-2 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input llm-checkbox" type="checkbox" data-llm="ChatGPT" id="checkbox-chatgpt">
+                            <label class="form-check-label" for="checkbox-chatgpt">ChatGPT</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input llm-checkbox" type="checkbox" data-llm="Gemini" id="checkbox-gemini">
+                            <label class="form-check-label" for="checkbox-gemini">Gemini</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input llm-checkbox" type="checkbox" data-llm="Grok" id="checkbox-grok">
+                            <label class="form-check-label" for="checkbox-grok">Grok</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input llm-checkbox" type="checkbox" data-llm="Llama" id="checkbox-llama">
+                            <label class="form-check-label" for="checkbox-llama">Llama</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input llm-checkbox" type="checkbox" data-llm="DeepSeek" id="checkbox-deepseek">
+                            <label class="form-check-label" for="checkbox-deepseek">DeepSeek</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2 mb-2">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input llm-checkbox" type="checkbox" data-llm="Claude" id="checkbox-claude">
+                            <label class="form-check-label" for="checkbox-claude">Claude</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="input-section mb-4">
+        <h2>What would you like to brainstorm about today with the LLMs selected above?</h2>
+        <div class="input-group mb-3">
+            <input type="text" class="form-control" id="prompt-input" placeholder="Enter your topic or question here">
+            <button class="btn btn-primary" id="go-btn">Go</button>
+        </div>
+    </div>
+
+    <div class="response-container mb-4 p-3 border rounded">
+        <div id="response-area">
+            <!-- Responses will appear here -->
+        </div>
+    </div>
+
+    <div class="follow-up-section mb-4">
+        <h2>Go another round with follow up interjection below:</h2>
+        <div class="input-group mb-3">
+            <span class="input-group-text">Follow-up:</span>
+            <input type="text" class="form-control" id="follow-up-input" placeholder="Enter your follow-up question or comment">
+            <button class="btn btn-primary" id="follow-up-btn">Go</button>
+        </div>
+    </div>
+
+    <div class="final-section mb-4 text-center">
+        <button class="btn btn-lg btn-primary" id="final-btn">Final Answer</button>
+    </div>
+</div>
+
+<!-- API Key Modal -->
+<div class="modal fade" id="api-key-modal" tabindex="-1" aria-labelledby="api-key-modal-label" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="api-key-modal-label">Configure API for <span id="llm-name"></span></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Please enter your API key to enable this LLM in the brainstorming session:</p>
+                <div class="mb-3">
+                    <label for="api-key-input" class="form-label">API Key:</label>
+                    <input type="password" class="form-control" id="api-key-input" placeholder="Enter your API key">
+                </div>
+                <div class="mb-3" id="model-selection-container">
+                    <label for="model-selection" class="form-label">Model:</label>
+                    <select class="form-select" id="model-selection">
+                        <!-- Will be populated dynamically based on the selected LLM -->
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" id="modal-save">Save & Enable</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            // Model options for each LLM
+            const modelOptions = {
+                'ChatGPT': [
+                    { value: 'gpt-4o', label: 'GPT-4o' },
+                    { value: 'gpt-4-turbo', label: 'GPT-4 Turbo' },
+                    { value: 'gpt-3.5-turbo', label: 'GPT-3.5 Turbo' }
+                ],
+                'Gemini': [
+                    { value: 'gemini-pro', label: 'Gemini Pro' },
+                    { value: 'gemini-1.5-pro', label: 'Gemini 1.5 Pro' },
+                    { value: 'gemini-1.5-flash', label: 'Gemini 1.5 Flash' }
+                ],
+                'Grok': [
+                    { value: 'grok-1', label: 'Grok-1' }
+                ],
+                'Llama': [
+                    { value: 'llama-3.1-70b', label: 'Llama 3.1 (70B)' },
+                    { value: 'llama-3.1-8b', label: 'Llama 3.1 (8B)' }
+                ],
+                'DeepSeek': [
+                    { value: 'deepseek-chat', label: 'DeepSeek Chat' },
+                    { value: 'deepseek-coder', label: 'DeepSeek Coder' }
+                ],
+                'Claude': [
+                    { value: 'claude-3-opus-20240229', label: 'Claude 3 Opus' },
+                    { value: 'claude-3-sonnet-20240229', label: 'Claude 3 Sonnet' },
+                    { value: 'claude-3-haiku-20240307', label: 'Claude 3 Haiku' }
+                ]
+            };
+
+            // Store API configurations
+            const apiConfigs = {
+                'ChatGPT': {
+                    model: 'gpt-4o',
+                    apiKey: '',
+                    enabled: false
+                },
+                'Gemini': {
+                    model: 'gemini-pro',
+                    apiKey: '',
+                    enabled: false
+                },
+                'Grok': {
+                    model: 'grok-1',
+                    apiKey: '',
+                    enabled: false
+                },
+                'Llama': {
+                    model: 'llama-3.1-70b',
+                    apiKey: '',
+                    enabled: false
+                },
+                'DeepSeek': {
+                    model: 'deepseek-chat',
+                    apiKey: '',
+                    enabled: false
+                },
+                'Claude': {
+                    model: 'claude-3-opus-20240229',
+                    apiKey: '',
+                    enabled: false
+                }
+            };
+
+            // Load the configurations from the server for all LLMs
+            function loadAllLlmConfigs() {
+                const llmNames = Object.keys(apiConfigs);
+
+                // Create an array of promises for each LLM config request
+                const promises = llmNames.map(llm =>
+                    fetch(`/api/config/${llm}`)
+                        .then(response => response.json())
+                        .then(config => {
+                            // Update the API config with server values
+                            apiConfigs[llm].model = config.defaultModel;
+                            apiConfigs[llm].apiKey = config.apiKey;
+
+                            // If has a valid key from config, enable it
+                            if (config.hasConfiguredKey) {
+                                apiConfigs[llm].enabled = true;
+                                // Check the checkbox
+                                $(`#checkbox-${llm.toLowerCase()}`).prop('checked', true);
+                            }
+                        })
+                        .catch(error => {
+                            console.error(`Failed to load config for ${llm}:`, error);
+                        })
+                );
+
+                // Wait for all promises to resolve
+                return Promise.all(promises);
+            }
+
+            // Load all LLM configs when page loads
+            loadAllLlmConfigs().then(() => {
+                console.log("All LLM configurations loaded from server");
+            });
+
+            // Store responses for passing to the next LLM
+            let allResponses = [];
+            let currentLLM = ''; // To track which LLM's modal is open
+
+            // Set up event listeners for LLM checkboxes
+            $('.llm-checkbox').on('change', function() {
+                const llm = $(this).data('llm');
+
+                if (this.checked && !apiConfigs[llm].enabled) {
+                    // Open modal to input API key
+                    openApiKeyModal(llm);
+
+                    // Uncheck until API key is provided
+                    this.checked = false;
+                } else if (!this.checked) {
+                    // Disable this LLM
+                    apiConfigs[llm].enabled = false;
+                }
+            });
+
+            // Modal event listeners
+            $('#api-key-modal').on('hidden.bs.modal', function () {
+                // Reset when modal is closed
+                currentLLM = '';
+                $('#api-key-input').val('');
+            });
+
+            $('#modal-save').on('click', function() {
+                const apiKey = $('#api-key-input').val().trim();
+                const selectedModel = $('#model-selection').val();
+
+                if (apiKey === '') {
+                    alert('Please enter a valid API key');
+                    return;
+                }
+
+                // Save API key and enable LLM
+                apiConfigs[currentLLM].apiKey = apiKey;
+                apiConfigs[currentLLM].model = selectedModel;
+                apiConfigs[currentLLM].enabled = true;
+
+                // Check the checkbox
+                $(`#checkbox-${currentLLM.toLowerCase()}`).prop('checked', true);
+
+                // Close modal
+                $('#api-key-modal').modal('hide');
+            });
+
+            // Function to open API key modal
+            function openApiKeyModal(llm) {
+                currentLLM = llm;
+                $('#llm-name').text(llm);
+
+                // Clear previous input
+                $('#api-key-input').val(apiConfigs[llm].apiKey || '');
+
+                // Populate model selection dropdown
+                const modelSelect = $('#model-selection');
+                modelSelect.empty();
+
+                modelOptions[llm].forEach(option => {
+                    const selected = option.value === apiConfigs[llm].model ? 'selected' : '';
+                    modelSelect.append(`<option value="${option.value}" ${selected}>${option.label}</option>`);
+                });
+
+                // Show modal
+                $('#api-key-modal').modal('show');
+            }
+
+            // Handle the initial Go button click
+            $('#go-btn').on('click', function() {
+                const prompt = $('#prompt-input').val().trim();
+                if (prompt === '') {
+                    alert('Please enter a topic or question');
+                    return;
+                }
+
+                // Get selected LLMs
+                const selectedLLMs = getSelectedLLMs();
+                if (selectedLLMs.length === 0) {
+                    alert('Please select at least one LLM');
+                    return;
+                }
+
+                // Clear previous responses
+                $('#response-area').empty();
+                allResponses = [];
+
+                // Start the chain of API calls with the first LLM
+                processLLMChain(selectedLLMs, prompt);
+            });
+
+            // Handle follow-up Go button
+            $('#follow-up-btn').on('click', function() {
+                const followUp = $('#follow-up-input').val().trim();
+                if (followUp === '') {
+                    alert('Please enter a follow-up question or comment');
+                    return;
+                }
+
+                // Get selected LLMs
+                const selectedLLMs = getSelectedLLMs();
+                if (selectedLLMs.length === 0) {
+                    alert('Please select at least one LLM');
+                    return;
+                }
+
+                // Process follow-up with chain of API calls
+                processLLMChain(selectedLLMs, followUp, true);
+            });
+
+            // Handle final answer button
+            $('#final-btn').on('click', function() {
+                if (allResponses.length === 0) {
+                    alert('No responses to compile. Please start a discussion first.');
+                    return;
+                }
+
+                // In a real implementation, you might send all responses to a final LLM to synthesize
+                alert('Final answer would be compiled from: ' + allResponses.map(r => r.llm).join(', '));
+            });
+
+            // Function to get selected LLMs
+            function getSelectedLLMs() {
+                const llms = [];
+
+                $('.llm-checkbox:checked').each(function() {
+                    const llm = $(this).data('llm');
+                    // Only include LLMs that have been properly configured
+                    if (apiConfigs[llm] && apiConfigs[llm].enabled) {
+                        llms.push(llm);
+                    }
+                });
+
+                return llms;
+            }
+
+            // Function to process chain of LLM API calls
+            function processLLMChain(llms, userPrompt, isFollowUp = false) {
+                if (llms.length === 0) return;
+
+                // Show loading state for the first LLM
+                const currentLLM = llms[0];
+                addLoadingResponse(currentLLM);
+
+                // Prepare context based on previous responses
+                let previousLlm = '';
+                let previousResponse = '';
+                let originalPrompt = userPrompt;
+
+                if (isFollowUp && allResponses.length > 0) {
+                    // Get the last response to include in the context
+                    const lastResponse = allResponses[allResponses.length - 1];
+                    previousLlm = lastResponse.llm;
+                    previousResponse = lastResponse.response;
+                }
+
+                // Call API for the current LLM
+                callLLMAPI(currentLLM, userPrompt, isFollowUp, previousLlm, previousResponse, originalPrompt)
+                    .then(response => {
+                        // Update the loading response with the actual response
+                        updateLoadingResponse(currentLLM, response.content);
+
+                        // Store this response
+                        allResponses.push({
+                            llm: currentLLM,
+                            response: response.content
+                        });
+
+                        // Process the next LLM in the chain
+                        const remainingLLMs = llms.slice(1);
+                        if (remainingLLMs.length > 0) {
+                            // Add a small delay before calling the next LLM
+                            setTimeout(() => {
+                                processLLMChain(remainingLLMs, userPrompt, true);
+                            }, 1000);
+                        }
+                    })
+                    .catch(error => {
+                        console.error(`Error with ${currentLLM} API:`, error);
+
+                        // Better error handling
+                        let errorMessage = "Unknown error";
+
+                        if (error.responseJSON && error.responseJSON.error) {
+                            errorMessage = error.responseJSON.error;
+                        } else if (error.responseText) {
+                            try {
+                                const errorObj = JSON.parse(error.responseText);
+                                errorMessage = errorObj.error || error.statusText;
+                            } catch {
+                                errorMessage = error.statusText || error.responseText;
+                            }
+                        } else if (error.message) {
+                            errorMessage = error.message;
+                        } else if (typeof error === 'string') {
+                            errorMessage = error;
+                        } else {
+                            try {
+                                errorMessage = JSON.stringify(error);
+                            } catch {
+                                errorMessage = "Could not parse error details";
+                            }
+                        }
+
+                        updateLoadingResponse(currentLLM, `Error: Could not get response from ${currentLLM}. ${errorMessage}`);
+
+                        // Continue with the next LLM despite the error
+                        const remainingLLMs = llms.slice(1);
+                        if (remainingLLMs.length > 0) {
+                            setTimeout(() => {
+                                processLLMChain(remainingLLMs, userPrompt, true);
+                            }, 1000);
+                        }
+                    });
+            }
+
+            // Function to add a loading response placeholder
+            function addLoadingResponse(llm) {
+                const responseElement = $(`
+                    <div class="llm-response p-3 mb-3 border rounded" id="response-${llm.toLowerCase()}">
+                        <div class="llm-name fw-bold mb-2">${llm} says:</div>
+                        <div class="llm-content">Thinking...</div>
+                    </div>
+                `);
+
+                $('#response-area').append(responseElement);
+            }
+
+            // Function to update a loading response with actual content
+            function updateLoadingResponse(llm, text) {
+                $(`#response-${llm.toLowerCase()} .llm-content`).text(text);
+            }
+
+            // Function to call the appropriate LLM API through our backend
+            async function callLLMAPI(llm, prompt, isFollowUp, previousLlm, previousResponse, originalPrompt) {
+                try {
+                    const response = await $.ajax({
+                        url: '/api/ask',
+                        type: 'POST',
+                        contentType: 'application/json',
+                        data: JSON.stringify({
+                            prompt: prompt,
+                            llmName: llm,
+                            model: apiConfigs[llm].model,
+                            apiKey: apiConfigs[llm].apiKey,
+                            isFollowUp: isFollowUp,
+                            previousLlm: previousLlm,
+                            previousResponse: previousResponse,
+                            originalPrompt: originalPrompt
+                        })
+                    });
+
+                    return response;
+                } catch (error) {
+                    console.error('API call error:', error);
+                    throw error;
+                }
+            }
+        });
+    </script>
+}

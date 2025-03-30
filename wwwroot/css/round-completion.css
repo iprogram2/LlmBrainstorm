@@ -1,0 +1,159 @@
+/* Enhanced Round Completion Modal Styles */
+.round-completion-modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    z-index: 2000;
+    justify-content: center;
+    align-items: center;
+}
+
+.round-completion-modal.show {
+    display: flex;
+}
+
+.round-completion-content {
+    background: linear-gradient(135deg, #d50000, #9f0000);
+    color: white;
+    border-radius: 15px;
+    padding: 40px 60px;
+    text-align: center;
+    box-shadow: 0 0 50px rgba(255, 215, 0, 0.7);
+    transform: scale(0.8);
+    animation: modal-pop 0.5s forwards;
+    border: 5px solid #ffd700;
+    position: relative;
+    overflow: hidden;
+}
+
+.round-completion-content::before {
+    content: "";
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    right: -10px;
+    bottom: -10px;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none" stroke="%23ffd700" stroke-width="2"/></svg>') repeat;
+    opacity: 0.2;
+    z-index: -1;
+}
+
+@keyframes modal-pop {
+    0% { transform: scale(0.8); opacity: 0; }
+    70% { transform: scale(1.05); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.round-completion-title {
+    font-size: 3rem;
+    font-weight: 900;
+    margin-bottom: 10px;
+    text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.5);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+.round-completion-subtitle {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    opacity: 0.9;
+    font-weight: bold;
+}
+
+.round-number {
+    font-size: 5rem;
+    font-weight: 900;
+    margin: 20px 0;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.6);
+    color: #ffd700;
+    position: relative;
+    display: inline-block;
+}
+
+.round-number::before,
+.round-number::after {
+    content: "★";
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ffd700;
+    font-size: 2.5rem;
+}
+
+.round-number::before {
+    left: -40px;
+}
+
+.round-number::after {
+    right: -40px;
+}
+
+.round-completion-points {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.2);
+    display: inline-block;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+}
+
+.blinking-button {
+    animation: button-blink 0.8s infinite;
+}
+
+@keyframes button-blink {
+    0% { background-color: var(--primary-color); }
+    50% { background-color: #ff1493; }
+    100% { background-color: var(--primary-color); }
+}
+
+/* Boxing ring ropes */
+.ring-ropes {
+    position: absolute;
+    width: 120%;
+    height: 120%;
+    top: -10%;
+    left: -10%;
+    pointer-events: none;
+}
+
+.rope {
+    position: absolute;
+    height: 8px;
+    background-color: #ffd700;
+    left: 0;
+    right: 0;
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+}
+
+.rope-top {
+    top: 15%;
+}
+
+.rope-middle {
+    top: 50%;
+}
+
+.rope-bottom {
+    bottom: 15%;
+}
+
+/* Enhanced Typewriter Animation */
+.typewriter-animation {
+    display: inline-block;
+    white-space: pre-wrap;
+    overflow: hidden;
+    border-right: 3px solid;
+    width: 0;
+    animation: typing-cursor 0.5s step-end infinite;
+}
+
+@keyframes typing-cursor {
+    from, to { border-color: transparent; }
+    50% { border-color: var(--text-color); }
+}
